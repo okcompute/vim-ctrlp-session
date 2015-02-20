@@ -16,7 +16,7 @@ endfunction
 " Create a session {{{
 function! ctrlp_session#create(name)
     echo 'Tracking session '.a:name
-    let g:this_ctrlp_session = s:session_file(name)
+    let g:this_ctrlp_session = s:session_file(a:name)
     call ctrlp_session#persist()
 endfunction
 "}}}
