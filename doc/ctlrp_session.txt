@@ -1,0 +1,113 @@
+*ctrlp_session.txt*	 For Vim version 7.4	 Last change: 2015 February 19th
+
+CtrlP extension to manage *Vim* sessions.
+
+Author:  Pascal Lalancette <okcompute@icloud.com>
+License: Same terms as Vim itself (see |license|)
+
+==============================================================================
+CONTENTS                                        *ctrlp_session-contents*
+
+    1. Introduction.................................|ctrlp_session-intro|
+    2. Requirements.................................|ctrlp_session-requirements|
+    4. Commands.....................................|ctrlp_session-commands|
+    5. About........................................|ctrlp_session-about||
+    5. Credits......................................|ctrlp_session-credits||
+
+==============================================================================
+INTRODUCTION                                    *ctrlp_session*
+
+Improve *Vim* session experience:
+
+    - Fast context switching
+    - Create sessions tracking Git branches
+    - One configurable location for all session files.
+    - Fuzzy search sessions
+
+Most useful when working within gVim (or MacVim) or on platforms where session
+switching tools (ex: TMux) are not common place (Windows...ahem...).
+
+==============================================================================
+REQUIREMENTS                                    *ctrlp_session-requirements*
+
+For this plugin to more value, you need these plugins to be installed:
+    -   'Tpope/vim-fugitive'
+    -   'Kien/ctrlp.vim'
+
+
+==============================================================================
+COMMANDS                                            *ctrlp_session-commands*
+
+These commands are available only for *python* file type buffers.
+
+                                                *ctrlp_session-:Session*
+:Session {name}         Create a session with name. Session will be
+                        automatically tracked.
+
+                                                *ctrlp_session-:SGit*
+:SGit                   Like `:`|Session| but use current repository name
+                        and branch to create the name.  i.e.
+                        (`repository@branch`.)
+
+                        ** Requires 'Tpope/vim-fugitive' **
+
+                                                *ctrlp_session-:SLoad*
+:SLoad {name}
+                        Load session with {name}.
+
+                                                *ctrlp_session-:SDelete*
+:SDelete {name}
+                        Delete sessio with {name}.
+
+                                                *ctrlp_session-:SQuit*
+:SQuit
+                        Stop tracking current active session and close all
+                        buffers.
+
+                                                *ctrlp_session-:SList*
+:SList
+                        List all available sessions.
+
+                                                *ctrlp_session-:CtrlPSession*
+:CtrlpSession           Launch CtrlP prompt for fuzzy searching available
+                        sessions.
+
+                        ** Requires 'Kien/ctrlp.vim' **
+
+==============================================================================
+RUNNING LAST TEST                                       *ctrlp_session-last-test*
+
+The plugin will *memorize* the last test, case or module used for these three commands:
+
+    |:RunTest|
+    |:RunCase|
+    |:RunModule|
+
+If any of these commands are called outside of a python test module (any python module name not starting with "test_...") the last test, case or module will be used. This is really useful for example when doing TDD. You write the test. Call `:RunTest`. It fails. Switch focus to source module. Add code. Call `:RunTest`. etc.
+
+==============================================================================
+CREDITS
+*ctrlp_session-credits*
+
+The implementation of this plugin  was inspired by the implementation of :
+
+- 'Tpope/vim-obsession'
+
+  This pluging helped me understand how to manage sessions correctly.
+
+- 'Manuel-colmenero/vim-simple-session'
+
+    This plugin was the initiator. I was a user and liked the idea. But it was
+    buggy. I tried to debug it but  the process of creating a new plugin was
+    too appealing and I chose this route.
+
+
+==============================================================================
+ABOUT                                                   *ctrlp_session-about*
+
+Grab the latest version or report a bug on GitHub:
+
+http://github.com/okcompute/vim-nose
+
+ vim:tw=78:et:ft=help:norl:
+
