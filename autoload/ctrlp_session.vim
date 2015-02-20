@@ -13,6 +13,18 @@ function! s:session_file(name)
 endfunction
 "}}}
 
+" system() implementation which keep only first line and remove ending newline
+" {{{
+function! s:system(cmd)
+    let l:output=system(a:cmd)
+    let l:lines = split(l:output, "\n")
+    if empty(l:lines)
+        return ""
+    endif
+    return l:lines[0]
+endfunction
+" }}}
+"
 " Create a session {{{
 function! ctrlp_session#create(name)
     echo 'Tracking session '.a:name
@@ -35,8 +47,8 @@ function! ctrlp_session#create_git()
         echohl None
 		return
     endif
-    let l:repository=fnamemodify(systemlist("git rev-parse --show-toplevel")[0], ":t")
-    let l:name=l:repository.":".fugitive#head()
+    let l:repository=fnamemodify(s:system("git rev-parse --show-toplevel"), ":t")
+    let l:name=l:repository."@".fugitive#head()
     call ctrlp_session#create(l:name)
 endfunction
 "}}}
@@ -56,7 +68,7 @@ endfunction
 function! ctrlp_session#delete(name)
     echo 'Deleting session in '.a:name
     let l:session_file = s:session_file(a:name)
-    if l:session_file == g:this_ctrlp_session
+    if exists('g:this_ctrlp_session') && l:session_file == g:this_ctrlp_session
         " The deleted session is the active one. Make sure it does not
         " magically reappear!
         unlet g:this_ctrlp_session
