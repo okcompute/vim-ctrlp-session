@@ -6,15 +6,18 @@
 
 let g:ctrlp_session_path="~/.vim_sessions"
 
+" Return full session path from a session name {{{
+function! s:session_file(name)
+    let l:file = g:ctrlp_session_path."/".a:name.".vim"
+    return fnamemodify(expand(l:file), ':p')
+endfunction
+"}}}
 
 " Create a session {{{
 function! ctrlp_session#create(name)
-    let l:file = ".g:ctrlp_session_path."/".a:name.".vim"
-    echo 'Tracking session '.fnamemodify(file, ':t')
-    " let v:this_session = l:file
-    let g:this_ctrlp_session = l:file
-    ctrlp_session#persist()
-    return ''
+    echo 'Tracking session '.a:name
+    let g:this_ctrlp_session = s:session_file(name)
+    call ctrlp_session#persist()
 endfunction
 "}}}
 
@@ -32,59 +35,33 @@ function! ctrlp_session#create_git()
         echohl None
 		return
     endif
-    let l:repository = fnamemodify(systemlist("git rev-parse --show-toplevel")[0], ":t")
-    let l:name = ".g:ctrlp_session_path."/".l:repository.":".fugitive#head().".vim"
-    ctrlp_session#create(l:name)
+    let l:repository=fnamemodify(systemlist("git rev-parse --show-toplevel")[0], ":t")
+    let l:name=l:repository.":".fugitive#head()
+    call ctrlp_session#create(l:name)
 endfunction
 "}}}
 
 " Load a session {{{
 function! ctrlp_session#load(name)
-    try
-        " Delete all previous buffers
-        exec("bufdo bd")
-    catch
-        echohl WarningMsg
-		echomsg "Could not delete all buffers before loading session."
-        echohl None
-        return
-    endtry
     " Disable persistence while loading session to avoid conflicts and
     " potential crashes.
-    ctrlp_session#pause()
-    let l:this_ctrlp_session = g:ctrlp_session_path."/".a:name.".vim"
-    exec("source ".l:this_ctrlp_session)
-    " Resume session
-    ctrlp_session#resume()
+    if exists('g:this_ctrlp_session')
+        unlet g:this_ctrlp_session
+    endif
+    exec("source ".s:session_file(a:name))
 endfunction
 "}}}
 
 " Delete a session {{{
 function! ctrlp_session#delete(name)
-    echo 'Deleting session in '.fnamemodify(g:this_ctrlp_session')
-    call delete(get(g:, 'this_ctrlp_session', v:this_session))
-endfunction
-"}}}
-
-" Pause current active session. Disable persistence. {{{
-function! ctrlp_session#pause()
-    if exists('g:this_ctrlp_session')
+    echo 'Deleting session in '.a:name
+    let l:session_file = s:session_file(a:name)
+    if l:session_file == g:this_ctrlp_session
+        " The deleted session is the active one. Make sure it does not
+        " magically reappear!
         unlet g:this_ctrlp_session
-    else
-		echomsg "No active session to pause"
-        return
     endif
-endfunction
-"}}}
-
-" Resume active session. Reactivte persistence. {{{
-function! ctrlp_session#resume()
-    if emtpy('v:this_session')
-		echomsg "No paused session to resume"
-        return
-    else
-        let g:this_ctrlp_session=v:this_session
-    endif
+    call delete(l:session_file)
 endfunction
 "}}}
 
@@ -109,28 +86,28 @@ endfunction
 
 " List all persisted sessions {{{
 function! ctrlp_session#list()
-	let l:wildignore = &wildignore
+	let l:wildignore=&wildignore
 	set wildignore=
-	let l:session_files = split(globpath(g:ctrlp_session_path, "*.vim"))
-	let l:result = map(l:session_files, "fnamemodify(expand(v:val), ':t:r')")
-	let &wildignore = l:wildignore
+	let l:session_files=split(globpath(g:ctrlp_session_path, "*.vim"))
+	let l:result=map(l:session_files, "fnamemodify(expand(v:val), ':t:r')")
+	let &wildignore=l:wildignore
 	return l:result
 endfunction
 "}}}
 
 " Take a snapshot of Vim state and persist on disk {{{
-function! ctrlp_sesion#persist()
+function! ctrlp_session#persist()
   if exists('g:this_ctrlp_session')
-    let sessionoptions = &sessionoptions
+    let sessionoptions= &sessionoptions
     try
       set sessionoptions-=blank sessionoptions-=options
       execute 'mksession! '.fnameescape(g:this_ctrlp_session)
-      call writefile(insert(readfile(g:this_ctrlp_session), 'let g:this_ctrlp_session = v:this_session', -2), g:this_ctrlp_session)
+      call writefile(insert(readfile(g:this_ctrlp_session), 'let g:this_ctrlp_session =v:this_session', -2), g:this_ctrlp_session)
     catch
       unlet g:this_ctrlp_session
-      return 'echoerr '.string(v:exception)
+      echoerr string(v:exception)
     finally
-      let &sessionoptions = sessionoptions
+      let &sessionoptions=sessionoptions
     endtry
   endif
   return ''

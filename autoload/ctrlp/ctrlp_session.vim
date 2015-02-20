@@ -81,6 +81,7 @@ function! ctrlp#ctrlp_session#accept(mode, str)
     call ctrlp_session#delete(a:str)
     return
   endif
+  call ctrlp_session#load(a:str)
 endfunction
 
 
