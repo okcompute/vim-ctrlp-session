@@ -4,13 +4,22 @@
 " Maintainer:         Pascal Lalancette
 " Version:            1.0
 
-let g:ctrlp_session_path="~/.vim_sessions"
 
-" Return full session path from a session name {{{
+" Return sessions location path {{{
+function! s:session_path()
+    if !exists('g:ctrlp_session_path')
+        return expand('%:.')
+    endif
+    return g:ctrlp_session_path
+endfunction
+"}}}
+
+" Return a session file path from its name {{{
 function! s:session_file(name)
-    let l:file = g:ctrlp_session_path."/".a:name.".vim"
+    let l:file = s:session_path()."/".a:name.".vim"
     return fnamemodify(expand(l:file), ':p')
 endfunction
+
 "}}}
 
 " system() implementation which keep only first line and remove ending newline
@@ -100,7 +109,7 @@ endfunction
 function! ctrlp_session#list()
 	let l:wildignore=&wildignore
 	set wildignore=
-	let l:session_files=split(globpath(g:ctrlp_session_path, "*.vim"))
+	let l:session_files=split(globpath(s:session_path(), "*.vim"))
 	let l:result=map(l:session_files, "fnamemodify(expand(v:val), ':t:r')")
 	let &wildignore=l:wildignore
 	return l:result

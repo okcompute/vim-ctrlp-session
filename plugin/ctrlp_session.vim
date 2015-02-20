@@ -2,6 +2,9 @@
 " Maintainer:         Pascal Lalancette
 " Version:            1.0
 
+" Location of session files
+let g:ctrlp_session_path="~/.vim_sessions"
+
 augroup ctrlp_session
   autocmd!
   autocmd BufEnter,VimLeavePre * call ctrlp_session#persist()
