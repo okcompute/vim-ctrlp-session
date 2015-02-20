@@ -23,7 +23,7 @@ endfunction
 command! -nargs=1 Session call ctrlp_session#create(<f-args>)
 command! -nargs=0 SGit call ctrlp_session#create_git()
 command! -nargs=1 SLoad call ctrlp_session#load(<f-args>)
-command! -nargs=0 SDelete call ctrlp_session#delete()
+command! -nargs=1 SDelete call ctrlp_session#delete(<f-args>)
 command! -nargs=0 SQuit call ctrlp_session#quit()
 command! -nargs=0 SList echo join(ctrlp_session#list(), ", ")
 command! -nargs=0 CtrlPSession call s:CtrlPSession()
