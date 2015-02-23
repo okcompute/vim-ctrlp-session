@@ -19,8 +19,8 @@ Requirements
 To get the most value out of this plugin, you need these plugins to be
 installed:
 
-    - [CtrlP](https://github.com/kien/ctrlp)
-    - [vim-fugitive](https://github.com/tpope/vim-fugitive)
+- [CtrlP](https://github.com/kien/ctrlp)
+- [vim-fugitive](https://github.com/tpope/vim-fugitive)
 
 Installation
 =============
@@ -42,7 +42,7 @@ Create a session with name. Session will be automatically tracked.
 Like :*Session* but use current repository name and branch to create the
 name.  i.e.  (`repository@branch`.)
 
-** Requires 'Tpope/vim-fugitive' **
+**Requires** [Tpope/vim-fugitive] (https://github.com/tpope/vim-obsession)
 
 ### `:SLoad {name}`
 
@@ -64,7 +64,7 @@ List all available sessions.
 
 Launch CtrlP prompt for fuzzy searching available sessions.
 
-** Requires 'Kien/ctrlp.vim' **
+**Requires** [Kien/ctrlp.vim] (https://github.com/kien/ctrlp.vim)
 
 
 CtrlP specific mappings
