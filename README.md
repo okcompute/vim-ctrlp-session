@@ -16,16 +16,19 @@ Improve *Vim* session experience:
 Requirements
 ============
 
-For this plugin to more value, you need these plugins to be installed:
+To get the most value out of this plugin, you need these plugins to be
+installed:
+
     - [CtrlP](https://github.com/kien/ctrlp)
     - [vim-fugitive](https://github.com/tpope/vim-fugitive)
 
 Installation
 =============
 
-Vundle:
+This assumes you are using [Vundle](https://github.com/gmarik/Vundle.vim).
+Adapt for your plugin manager of choice. Put this into your `.vimrc`.
 
-``Plugin 'okcompute\vim-ctrlp-session'``
+    Plugin 'okcompute/vim-ctrlp-session'
 
 Usage
 =====
