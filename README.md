@@ -19,7 +19,7 @@ Requirements
 To get the most value out of this plugin, you need these plugins to be
 installed:
 
-- [CtrlP](https://github.com/kien/ctrlp)
+- [CtrlP](https://github.com/kien/ctrlp.vim)
 - [vim-fugitive](https://github.com/tpope/vim-fugitive)
 
 Installation
