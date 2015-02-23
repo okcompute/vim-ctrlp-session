@@ -42,7 +42,7 @@ Create a session with name. Session will be automatically tracked.
 Like :*Session* but use current repository name and branch to create the
 name.  i.e.  (`repository@branch`.)
 
-**Requires** [Tpope/vim-fugitive] (https://github.com/tpope/vim-obsession)
+**Requires** [Tpope/vim-fugitive] (https://github.com/tpope/vim-fugitive)
 
 ### `:SLoad {name}`
 
