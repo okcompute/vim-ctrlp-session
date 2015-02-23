@@ -67,7 +67,7 @@ function! ctrlp_session#load(name)
     " Disable persistence while loading session to avoid conflicts and
     " potential crashes.
     if exists('g:this_ctrlp_session')
-        unlet g:this_ctrlp_session
+        call ctrlp_session#quit()
     endif
     exec("source ".s:session_file(a:name))
 endfunction
@@ -80,7 +80,7 @@ function! ctrlp_session#delete(name)
     if exists('g:this_ctrlp_session') && l:session_file == g:this_ctrlp_session
         " The deleted session is the active one. Make sure it does not
         " magically reappear!
-        unlet g:this_ctrlp_session
+        call ctrlp_session#quit()
     endif
     call delete(l:session_file)
 endfunction
@@ -92,10 +92,14 @@ function! ctrlp_session#quit()
 		echomsg "No active session to quit"
         return
     endif
+	if !exists(":CtrlP")
+        " Clear all CtrlP caches
+        call ctrlp#clra()
+    endif
     unlet g:this_ctrlp_session
     try
         " Delete all previous buffers
-        exec("bufdo bd")
+        exec("silent! bufdo bwipeout")
     catch
         echohl WarningMsg
 		echomsg "Could not delete all buffers while leaving session."
