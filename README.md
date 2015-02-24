@@ -42,6 +42,13 @@ Create a session with name. Session will be automatically tracked.
 Like :*Session* but use current repository name and branch to create the
 name.  i.e.  (`repository@branch`.)
 
+If the `vim-ctrlp-session.session-prefix` (respectively
+`vim-ctrlp-session.session-suffix`) git configuration are set, its value is
+automatically prefixed (respectively suffixed) to the `repository` name.
+
+This is useful when you have several checkouts of the same repository (with the
+same name) at different location and you want to be able to distinguish those.
+
 **Requires** [Tpope/vim-fugitive] (https://github.com/tpope/vim-fugitive)
 
 ### `:SLoad {name}`

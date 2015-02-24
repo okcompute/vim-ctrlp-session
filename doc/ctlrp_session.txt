@@ -50,6 +50,13 @@ COMMANDS                                            *ctrlp_session-commands*
                         and branch to create the name.  i.e.
                         (`repository@branch`.)
 
+                        <repository> can be automatically prefixed and/or
+                        suffixed by setting the following configuration values
+                        in Git's configuration:
+
+                        - vim-ctrlp-session.session-prefix
+                        - vim-ctrlp-session.session-suffix
+
                         ** Requires 'Tpope/vim-fugitive' Vim plugin **
 
                                                 *ctrlp_session-:SLoad*
