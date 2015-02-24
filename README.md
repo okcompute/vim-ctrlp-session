@@ -60,7 +60,7 @@ Stop tracking current active session and close all buffers.
 
 List all available sessions.
 
-### `:CtrlpSession`
+### `:CtrlPSession`
 
 Launch CtrlP prompt for fuzzy searching available sessions.
 
