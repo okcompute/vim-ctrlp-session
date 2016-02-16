@@ -3,7 +3,9 @@
 " Version:            1.0
 
 " Location of session files
-let g:ctrlp_session_path="~/.vim_sessions"
+if !exists('g:ctrlp_session_path')
+	let g:ctrlp_session_path="~/.vim_sessions"
+endif
 
 augroup ctrlp_session
   autocmd!
