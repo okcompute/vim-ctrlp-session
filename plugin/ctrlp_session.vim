@@ -4,7 +4,11 @@
 
 " Location of session files
 if !exists('g:ctrlp_session_path')
-	let g:ctrlp_session_path="~/.vim_sessions"
+	if exists('g:ctrlp_cache_dir')
+		let g:ctrlp_session_path=expand(g:ctrlp_cache_dir . '/sessions')
+	else
+		let g:ctrlp_session_path="~/.vim_sessions"
+	endif
 endif
 
 augroup ctrlp_session
