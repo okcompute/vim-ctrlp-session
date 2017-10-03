@@ -95,7 +95,8 @@ Once inside CtrlP prompt:~
 GLOBAL OPTIONS                                   *ctrlp_session-global-options*
 
                                                         *'ctrlp_session_path'*
-default: '~/.vim_sessions'
+default: g:ctrlp_cache_dir . '/sessions' if g:ctrlp_cache_dir exists
+         else '~/.vim_sessions'
 
 Control where the session files will be persisted on disk.
 
