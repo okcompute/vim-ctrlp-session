@@ -168,6 +168,7 @@ function! ctrlp_session#persist()
     let sessionoptions= &sessionoptions
     try
       set sessionoptions-=blank sessionoptions-=options
+      call s:Mkdirp(fnamemodify(g:this_ctrlp_session, ':p:h'))
       execute 'mksession! '.fnameescape(g:this_ctrlp_session)
       call writefile(insert(readfile(g:this_ctrlp_session), 'let g:this_ctrlp_session =v:this_session', -2), g:this_ctrlp_session)
     catch
@@ -180,3 +181,11 @@ function! ctrlp_session#persist()
   return ''
 endfunction
 "}}}
+
+" mkdirp {{{
+function! s:Mkdirp(dirname)
+  if !isdirectory(expand(a:dirname))
+    call mkdir(expand(a:dirname), 'p')
+  endif
+endfunction
+" }}}
